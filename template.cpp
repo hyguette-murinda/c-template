@@ -202,61 +202,76 @@ int main() {
     vector<Course> courses;
     loadCourses(courses, "courses.csv");
 
-    char choice;
+     char choice;
     do {
         cout << "Menu:\n1. Add new course\n2. Add new student\n3. Display saved students\n4. Search student by name\n5. Display available courses\n6. Exit\nEnter your choice: ";
         cin >> choice;
 
-        if (choice == '1') {
-            string courseName;
-            char availability;
-            bool isAvailable;
-            cout << "Enter course name: ";
-            cin >> ws;
-            getline(cin, courseName);
-            cout << "Is the course available? (y/n): ";
-            cin >> availability;
-            isAvailable = (availability == 'y');
-            addCourse(courses, courseName, isAvailable);
-
-        } else if (choice == '2') {
-            string name;
-            int age;
-            vector<string> studentCourses;
-            string course;
-
-            cout << "Enter student name: ";
-            cin >> ws;
-            getline(cin, name);
-
-            cout << "Enter student age: ";
-            cin >> age;
-
-            cout << "Enter courses (type 'done' to finish): ";
-            while (true) {
-                cin >> course;
-                if (course == "done") break;
-                studentCourses.push_back(course);
+        switch (choice) {
+            case '1': {
+                string courseName;
+                char availability;
+                bool isAvailable;
+                cout << "Enter course name: ";
+                cin >> ws;
+                getline(cin, courseName);
+                cout << "Is the course available? (y/n): ";
+                cin >> availability;
+                isAvailable = (availability == 'y');
+                addCourse(courses, courseName, isAvailable);
+                break;
             }
+            case '2': {
+                string name;
+                int age;
+                vector<string> studentCourses;
+                string course;
 
-            enrollStudent(courses, name, age, studentCourses);
+                cout << "Enter student name: ";
+                cin >> ws;
+                getline(cin, name);
 
-        } else if (choice == '3') {
-            cout << "Displaying students from CSV file:" << endl;
-            displayStudentsFromCSV("students.csv");
+                cout << "Enter student age: ";
+                cin >> age;
 
-        } else if (choice == '4') {
-            string studentName;
-            cout << "Enter student name to search: ";
-            cin >> ws;
-            getline(cin, studentName);
-            searchStudentByName("students.csv", studentName);
+                cout << "Enter courses (type 'done' to finish): ";
+                while (true) {
+                    cin >> course;
+                    if (course == "done") break;
+                    studentCourses.push_back(course);
+                }
 
-        } else if (choice == '5') {
-            displayAvailableCourses(courses);
+                enrollStudent(courses, name, age, studentCourses);
+                break;
+            }
+            case '3': {
+                cout << "Displaying students from CSV file:" << endl;
+                displayStudentsFromCSV("students.csv");
+                break;
+            }
+            case '4': {
+                string studentName;
+                cout << "Enter student name to search: ";
+                cin >> ws;
+                getline(cin, studentName);
+                searchStudentByName("students.csv", studentName);
+                break;
+            }
+            case '5': {
+                displayAvailableCourses(courses);
+                break;
+            }
+            case '6': {
+                cout << "Exiting..." << endl;
+                break;
+            }
+            default: {
+                cout << "Invalid choice. Exiting..." << endl;
+                return 0;
+            }
         }
-
     } while (choice != '6');
+
 
     return 0;
 }
